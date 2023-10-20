@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Анна Игнатова](https://up.htmlacademy.ru/javascript/30/user/2275573).
-* Наставник: [Павел Поздняк](https://htmlacademy.ru/profile/id907403).
+* Наставник: [Павел Позняк](https://htmlacademy.ru/profile/id907403).
 
 ---
 
