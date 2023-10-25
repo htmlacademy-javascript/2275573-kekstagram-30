@@ -1,6 +1,4 @@
 import {createPosts} from './data';
+import {createImages} from './thumbnails.js';
 
-
-createPosts();
-
-
+createImages(createPosts ());
