@@ -51,7 +51,7 @@ const addComment = () => ({
 
 const addPost = () => ({
   id: postId,
-  url: `photos/ ${postId++}.jpg`,
+  url: `photos/${postId++}.jpg`,
   likes: getRandomInteger(LIKES_COUNT.min, LIKES_COUNT.max),
   comments: Array.from({length: getRandomInteger(MESSAGES_COUNT.min, MESSAGES_COUNT.max)}, addComment),
   description: getRandomArrayElement(DESCRIPTIONS),
