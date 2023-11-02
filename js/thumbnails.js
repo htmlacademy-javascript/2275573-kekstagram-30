@@ -1,25 +1,30 @@
-const elementTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const container = document.querySelector('.pictures');
-const createImage = ({comments, description, likes, url, }) => {
-  const element = elementTemplate.cloneNode(true);
+import {createPosts} from './data.js';
+import {renderModal} from './modal.js';
 
-  element.querySelector('.picture__img').src = url;
-  element.querySelector('.picture__img').alt = description;
-  element.querySelector('.picture__comments').textContent = comments.length;
-  element.querySelector('.picture__likes').textContent = likes;
+const picturesContainer = document.querySelector('.pictures');
+const picture = document.querySelector('#picture').content.querySelector('.picture');
+const data = createPosts();
+const fragment = document.createDocumentFragment();
 
-  return element;
-};
 
-const createImages = (pictures) => {
-  const fragment = document.createDocumentFragment();
-  pictures.forEach((picture) => {
-    const element = createImage(picture);
-    fragment.append(element);
+const createThumbnail = (photo) => {
+  const pictureClone = picture.cloneNode(true);
+  const img = pictureClone.querySelector('.picture__img');
+  img.src = photo.url;
+  img.alt = photo.description;
+  pictureClone.querySelector('.picture__comments').textContent = photo.comments.length;
+  pictureClone.querySelector('.picture__likes').textContent = photo.likes;
+  pictureClone.addEventListener('click', (event) => {
+    event.preventDefault();
+    renderModal(photo);
   });
-
-  container.append(fragment);
+  fragment.append(pictureClone);
 };
+
+const createImages = () => {
+  data.forEach((item) => createThumbnail(item));
+  picturesContainer.append(fragment);
+};
+
 
 export {createImages};
-
