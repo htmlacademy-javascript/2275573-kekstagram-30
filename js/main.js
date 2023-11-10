@@ -1,4 +1,7 @@
-import {createPosts} from './data';
-import {createImages} from './thumbnails.js';
+import {createPhotoPost} from './thumbnails.js';
+import './form.js';
 
-createImages(createPosts ());
+
+createPhotoPost();
+
+

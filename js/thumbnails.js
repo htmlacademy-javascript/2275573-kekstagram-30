@@ -21,10 +21,10 @@ const createThumbnail = (photo) => {
   fragment.append(pictureClone);
 };
 
-const createImages = () => {
+const createPhotoPost = () => {
   data.forEach((item) => createThumbnail(item));
   picturesContainer.append(fragment);
 };
 
 
-export {createImages};
+export {createPhotoPost};
