@@ -1,7 +1,7 @@
-import {isEscapeKey} from './util.js';
+import { isEscapeKey } from './utils.js';
 
 
-const COMMENT_COUNTER = 5;
+const COMMENTS_COUNTER = 5;
 
 const pictureModal = document.querySelector('.big-picture');
 const fullSizeImg = document.querySelector('.big-picture__img img');
@@ -53,8 +53,8 @@ const fillComment = (item) => {
 };
 
 const fillCommentsList = () => {
-  const currentComments = comments.slice(showComments, showComments + COMMENT_COUNTER);
-  showComments = Math.min(showComments + COMMENT_COUNTER, comments.length);
+  const currentComments = comments.slice(showComments, showComments + COMMENTS_COUNTER);
+  showComments = Math.min(showComments + COMMENTS_COUNTER, comments.length);
   currentComments.forEach((comment) => fragment.append(fillComment(comment)));
   commentsList.append(fragment);
   setButtonState();
@@ -96,4 +96,4 @@ const renderModal = (data) => {
 };
 
 
-export {renderModal};
+export { renderModal };
