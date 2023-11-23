@@ -10,7 +10,7 @@ const textDescription = uploadOverlay.querySelector('.text__description');
 const uploadForm = document.querySelector('.img-upload__form');
 
 const MAX_HASHTAG_COUNT = 5;
-const ALLOWED_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const errorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Хэштеги должны быть уникальными',
@@ -43,7 +43,7 @@ const openModal = () => {
 };
 
 const normalizeTags = (tagString) => tagString.trim().split(' ').filter((tag) => Boolean(tag.length));
-const hasValidTags = (value) => normalizeTags(value).every((tag) => ALLOWED_SYMBOLS.test(tag));
+const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
 const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTAG_COUNT;
 const hasUniqueTags = (value) => {
   const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
@@ -58,7 +58,7 @@ function onFormFieldKeydown(evt) {
 }
 
 function onDocumentKeydown (evt) {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt)){
     evt.preventDefault();
     closeModal();
   }
@@ -79,6 +79,7 @@ textDescription.addEventListener('keydown', (evt) => {
 const onUploadFormSubmit = (evt) => {
   evt.preventDefault();
   pristine.validate();
+// 11й
 };
 
 pristine.addValidator(textHashtags, hasValidCount, errorText.INVALID_COUNT,3,true);
