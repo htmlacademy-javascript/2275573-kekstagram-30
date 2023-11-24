@@ -1,3 +1,4 @@
+
 import { renderGallery } from './gallery/thumbnails.js';
 import { getPictures } from './gallery/api.js';
 import './form/form.js';
