@@ -15,4 +15,3 @@ const bootstrap = async () => {
 };
 
 bootstrap();
-
