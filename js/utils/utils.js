@@ -1,5 +1,5 @@
 const REMOVE_MESSAGE_TIMEOUT = 4000;
-const DEBOUNCE_COUNT = 500;
+const DEBOUNCE_DELAY = 500;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 const errorMessageTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
@@ -13,7 +13,7 @@ const showErrorMessage = () => {
   }, REMOVE_MESSAGE_TIMEOUT);
 };
 
-const debounce = (callback, timeoutDelay = DEBOUNCE_COUNT) => {
+const debounce = (callback, timeoutDelay = DEBOUNCE_DELAY) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);

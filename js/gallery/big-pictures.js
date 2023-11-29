@@ -4,7 +4,7 @@ const COMMENTS_COUNTER = 5;
 
 const pictureModal = document.querySelector('.big-picture');
 const fullSizeImg = document.querySelector('.big-picture__img img');
-const buttonClose = document.querySelector('.big-picture__cancel');
+const btnClose = document.querySelector('.big-picture__cancel');
 const commentsList = document.querySelector('.social__comments');
 const commentItem = document.querySelector('.social__comment');
 const likesCount = document.querySelector('.likes-count');
@@ -16,14 +16,14 @@ const fragment = document.createDocumentFragment();
 let showComments = 0;
 let comments = [];
 
-const setButtonState = () => {
+const setBtnState = () => {
   commentsLoader.classList.toggle('hidden', showComments >= comments.length);
 };
 
 const openModal = () => {
   pictureModal.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  buttonClose.addEventListener('click', onButtonCloseClick);
+  btnClose.addEventListener('click', onBtnCloseClick);
   document.addEventListener('keydown', onDocumentKeydown);
   commentsLoader.addEventListener('click', onCommentsLoaderClick);
 };
@@ -31,7 +31,7 @@ const openModal = () => {
 const closeModal = () => {
   pictureModal.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  buttonClose.removeEventListener('click', onButtonCloseClick);
+  btnClose.removeEventListener('click', onBtnCloseClick);
   document.removeEventListener('keydown', onDocumentKeydown);
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   showComments = 0;
@@ -55,7 +55,7 @@ const fillCommentsList = () => {
   showComments = Math.min(showComments + COMMENTS_COUNTER, comments.length);
   currentComments.forEach((comment) => fragment.append(fillComment(comment)));
   commentsList.append(fragment);
-  setButtonState();
+  setBtnState();
   fillCommentsCounter();
 };
 
@@ -66,7 +66,7 @@ function onDocumentKeydown (evt) {
   }
 }
 
-function onButtonCloseClick (evt) {
+function onBtnCloseClick (evt) {
   evt.preventDefault();
   closeModal();
 }

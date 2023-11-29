@@ -8,16 +8,7 @@ import { openSuccessMessage, openErrorMessage } from './messages.js';
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
-
-const uploadOverlay = document.querySelector('.img-upload__overlay');
-const uploadInput = document.querySelector('.img-upload__input');
-const uploadCancel = document.querySelector('.img-upload__cancel');
-const photoPreview = document.querySelector('.img-upload__preview img');
-const effectsPreviews = document.querySelectorAll('.effects__preview');
-const textHashtags = uploadOverlay.querySelector('.text__hashtags');
-const textDescription = uploadOverlay.querySelector('.text__description');
-const uploadForm = document.querySelector('.img-upload__form');
-const submitButton = document.querySelector('.img-upload__submit');
+const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
 
 const SubmitButtonCaption = {
   SUBMITTING: 'Отправляю...',
@@ -35,7 +26,17 @@ const ErrorText = {
   INVALID_PATTERN: 'Неправильный хэштег',
 };
 
-const toggleSubmitButton = (isDisabled) => {
+const uploadOverlay = document.querySelector('.img-upload__overlay');
+const uploadInput = document.querySelector('.img-upload__input');
+const uploadCancel = document.querySelector('.img-upload__cancel');
+const photoPreview = document.querySelector('.img-upload__preview img');
+const effectsPreviews = document.querySelectorAll('.effects__preview');
+const textHashtags = uploadOverlay.querySelector('.text__hashtags');
+const textDescription = uploadOverlay.querySelector('.text__description');
+const uploadForm = document.querySelector('.img-upload__form');
+const submitButton = document.querySelector('.img-upload__submit');
+
+const toggleSubmitBtn = (isDisabled) => {
   submitButton.disabled = isDisabled;
   if (isDisabled) {
     submitButton.textContent = SubmitButtonCaption.SUBMITTING;
@@ -51,12 +52,18 @@ const pristine = new Pristine(uploadForm, {
   errorTextClass: 'img-upload__field-wrapper--error',
 });
 
+const fileInputReset = () => {
+  photoPreview.src = DEFAULT_IMAGE;
+  effectsPreviews.forEach((preview) => {
+    preview.style.backgroundImage = `url('${DEFAULT_IMAGE}')`;
+  });
+};
 
 const closeModal = () => {
-  if(openSuccessMessage()){
+  if(document.querySelector('success')){
     document.body.classList.remove('modal-open');
   }
-
+  fileInputReset ();
   uploadForm .reset();
   resetScale();
   resetEffects();
@@ -81,7 +88,7 @@ const hasUniqueTags = (value) => {
 };
 
 function onDocumentKeydown(evt) {
-  const isErrorMessageExists = Boolean(document.querySelector('.error'));
+  const isErrorMessageExists = document.querySelector('.error');
   if (isEscapeKey(evt) && !isTextFieldFocused() && !isErrorMessageExists) {
     evt.preventDefault();
     closeModal();
@@ -92,7 +99,7 @@ const isValidType = (file) => {
   return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
 
-const onFileInputChange = () => {
+const uploadInputChange = () => {
   const file = uploadInput.files[0];
 
   if (file && isValidType(file)) {
@@ -104,7 +111,7 @@ const onFileInputChange = () => {
   openModal();
 };
 
-const onCancelButtonClick = () => {
+const uploadCancelClick = () => {
   closeModal();
 };
 
@@ -117,20 +124,20 @@ pristine.addValidator(textDescription, (value) => value.length <= DescriptionDef
 );
 
 
-const sendForm = async (formElement) => {
+const sendForm = async (form) => {
   if (!pristine.validate()) {
     return;
   }
 
   try {
-    toggleSubmitButton(true);
-    await sendPictures(new FormData(formElement));
-    toggleSubmitButton(false);
+    toggleSubmitBtn(true);
+    await sendPictures(new FormData(form));
+    toggleSubmitBtn(false);
     openSuccessMessage();
     closeModal();
   } catch {
     openErrorMessage();
-    toggleSubmitButton(false);
+    toggleSubmitBtn(false);
   }
 };
 
@@ -140,8 +147,7 @@ const onFormSubmit = (evt) => {
 };
 
 
-uploadInput.addEventListener('change', onFileInputChange);
-uploadCancel.addEventListener('click', onCancelButtonClick);
+uploadInput.addEventListener('change', uploadInputChange);
+uploadCancel.addEventListener('click', uploadCancelClick);
 uploadForm.addEventListener('submit', onFormSubmit);
 updateSlider();
-

@@ -7,19 +7,19 @@ const closeMessage = () => {
   const exists = document.querySelector('.success') || document.querySelector('.error');
   exists.remove();
   document.removeEventListener('keydown', onDocumentKeydown);
-  document.body.removeEventListener('click', onBodyClick);
+  document.body.removeEventListener('click', onDocumentClick);
 };
 
-const onCloseButtonClick = () => closeMessage();
+const onCloseBtnClick = () => closeMessage();
 
 const openMessage = (element, buttonClass) => {
   document.body.append(element);
-  document.body.addEventListener('click', onBodyClick);
-  element.querySelector(buttonClass).addEventListener('click', onCloseButtonClick);
+  document.addEventListener('click', onDocumentClick);
+  element.querySelector(buttonClass).addEventListener('click', onCloseBtnClick);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-function onBodyClick (evt) {
+function onDocumentClick (evt) {
   if (evt.target.closest('.success__inner') || evt.target.closest('.error__inner')) {
     return;
   }

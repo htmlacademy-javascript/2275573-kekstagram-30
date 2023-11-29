@@ -1,5 +1,5 @@
 import { debounce } from '../utils/utils.js';
-import { renderGallery } from './thumbnails';
+import { renderThumbnails } from './thumbnails';
 
 const MAX_RANDOM_FILTER = 10;
 const RERENDER_DELAY = 500;
@@ -14,14 +14,14 @@ const FilterEnum = {
 const imgFilter = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
 const defaultBtn = imgFilter.querySelector('#filter-default');
-const randomButton = imgFilter.querySelector('#filter-random');
-const discussedButton = imgFilter.querySelector('#filter-discussed');
+const randomBtn = imgFilter.querySelector('#filter-random');
+const discussedBtn = imgFilter.querySelector('#filter-discussed');
 
 let activeBtn = defaultBtn;
 
-const FilterHandlers = {
+const filterHandlers = {
   [FilterEnum.DEFAULT]: (data) => data,
-  [FilterEnum.RANDOM]: (data) => data.sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_FILTER),
+  [FilterEnum.RANDOM]: (data) => data.slice().sort(() => Math.random() - 0.5).slice(0, MAX_RANDOM_FILTER),
   [FilterEnum.DISCUSSED]: (data) => [...data].sort((item1, item2) => item2.comments.length - item1.comments.length)
 };
 
@@ -37,9 +37,9 @@ const clearContainer = () => {
 };
 
 const reRender = (filter, data) => {
-  const filteredData = FilterHandlers[filter](data);
+  const filteredData = filterHandlers[filter](data);
   clearContainer();
-  renderGallery(filteredData);
+  renderThumbnails(filteredData);
 };
 
 const debounceRender = debounce(reRender, RERENDER_DELAY);
@@ -56,10 +56,10 @@ const initFilter = (data) => {
     if (target === defaultBtn) {
       debounceRender(FilterEnum.DEFAULT, data);
     }
-    if (target === randomButton) {
+    if (target === randomBtn) {
       debounceRender(FilterEnum.RANDOM, data);
     }
-    if (target === discussedButton) {
+    if (target === discussedBtn) {
       debounceRender(FilterEnum.DISCUSSED, data);
     }
   });
