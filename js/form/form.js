@@ -5,7 +5,7 @@ import { sendPictures } from '../api/api.js';
 import { openSuccessMessage, openErrorMessage } from './messages.js';
 
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const FILE_TYPES = ['.jpg', '.jpeg', '.png'];
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const DEFAULT_IMAGE = 'img/upload-default-image.jpg';
@@ -44,7 +44,6 @@ const toggleSubmitBtn = (isDisabled) => {
     submitButton.textContent = SubmitButtonCaption.IDLE;
   }
 };
-
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -115,14 +114,12 @@ const uploadCancelClick = () => {
   closeModal();
 };
 
-
 pristine.addValidator(textHashtags, hasValidCount, ErrorText.INVALID_COUNT,3,true);
 pristine.addValidator(textHashtags, hasUniqueTags, ErrorText.NOT_UNIQUE,2,true);
 pristine.addValidator(textHashtags, hasValidTags, ErrorText.INVALID_PATTERN,1,true);
 pristine.addValidator(textDescription, (value) => value.length <= DescriptionDefault.MAX_LENGTH,
   DescriptionDefault.COMMENT_ERR
 );
-
 
 const sendForm = async (form) => {
   if (!pristine.validate()) {
@@ -145,7 +142,6 @@ const onFormSubmit = (evt) => {
   evt.preventDefault();
   sendForm(evt.target);
 };
-
 
 uploadInput.addEventListener('change', uploadInputChange);
 uploadCancel.addEventListener('click', uploadCancelClick);
