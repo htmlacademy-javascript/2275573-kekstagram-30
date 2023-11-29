@@ -4,7 +4,7 @@ import './form/form.js';
 import { showErrorMessage } from './utils/utils.js';
 import { initFilter } from './gallery/filter.js';
 
-const loadAssemblage = async () => {
+const loadAssembly = async () => {
   try {
     const pictures = await getPictures();
     renderThumbnails(pictures);
@@ -14,4 +14,4 @@ const loadAssemblage = async () => {
   }
 };
 
-loadAssemblage();
+ loadAssembly();
