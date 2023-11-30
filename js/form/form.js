@@ -38,11 +38,8 @@ const submitButton = document.querySelector('.img-upload__submit');
 
 const toggleSubmitBtn = (isDisabled) => {
   submitButton.disabled = isDisabled;
-  if (isDisabled) {
-    submitButton.textContent = SubmitButtonCaption.SUBMITTING;
-  } else {
-    submitButton.textContent = SubmitButtonCaption.IDLE;
-  }
+  const displayState = isDisabled ? SubmitButtonCaption.SUBMITTING : SubmitButtonCaption.IDLE;
+  submitButton.textContent = displayState;
 };
 
 const pristine = new Pristine(uploadForm, {

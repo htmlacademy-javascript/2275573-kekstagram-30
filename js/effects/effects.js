@@ -60,11 +60,9 @@ const isDefault = () => baseEffects === DEFAULT_EFFECT;
 
 const updateSlider = () => {
   slider.classList.remove('hidden');
-  if (isDefault()) {
-    sliderContainer.style.display = 'none';
-  } else {
-    sliderContainer.style.display = 'block';
-  }
+  const displayState = isDefault() ? 'none' : 'block';
+  sliderContainer.style.display = displayState;
+
 
   slider.noUiSlider.updateOptions({
     range: {
